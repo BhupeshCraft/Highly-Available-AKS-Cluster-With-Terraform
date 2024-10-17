@@ -22,3 +22,72 @@
 <b> • OpenTelemetry (OTEL) : For traces and metrics. </b> <br>
 
 <br>
+
+<h2 align="center"> 1) Configure Azure CLI :- </h2>
+
+<br>
+
+` az login  ` <br>
+` az account set --subscription "your-subscription-id" `
+
+<br>
+
+<h2 align="center"> Setup Terraform & Azure Authentication :- </h2>
+
+<br>
+
+` az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<your-subscription-id>" `
+
+<br>
+
+Store the `client_id` , `client_secret` , `tenant_id` , and `subscription_id` for later use in your Terraform configuration.
+
+<br>
+
+<h2 align="center"> 2) Define Terraform Configuration : </h2>
+
+<br>
+
+## Create a new directory for your project :-
+
+<br>
+
+```
+mkdir aks-terraform-project
+cd aks-terraform-project
+```
+
+<br>
+
+## Define Infrastructure Resources in Terraform As Per Following :-
+
+<a href="main.tf"> • main.tf </a> <br>
+<a href="variables.tf"> • variables.tf </a> <br>
+<a href="terraform.tfvars"> • terraform.tfvars </a> <br>
+
+<br>
+
+<b> • AKS with multiple node pools for high availability and scalability. </b> <br>
+<b> • Azure Load Balancer with a standard SKU for production use. </b> <br>
+<b> • Managed Identities for secure access to Azure services. </b> <br>
+<b> • Private Cluster with restricted access and VNET integration for security. </b> <br>
+
+<br>
+
+<h3 align="center"> Note : Set Up Variables in "variables.tf"  and "terraform.tfvars" for flexibility. </h3>
+
+<br>
+
+### Initialize and Apply :-
+
+<br>
+
+` terraform init ` <br>
+
+` terraform apply ` <br>
+
+<br>
+
+
+
+

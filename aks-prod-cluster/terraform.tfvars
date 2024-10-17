@@ -1,0 +1,11 @@
+resource_group_name      = "aks-prod-rg"
+location                 = "East US"
+vnet_name                = "aks-prod-vnet"
+vnet_address_space       = ["10.0.0.0/16"]
+subnet_name              = "aks-prod-subnet"
+subnet_address_prefix    = "10.0.1.0/24"
+aks_cluster_name         = "aks-prod-cluster"
+dns_prefix               = "aks-prod-cluster"
+node_count               = 3
+vm_size                  = "Standard_D4s_v3"
+private_cluster_enabled  = true
