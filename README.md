@@ -61,16 +61,18 @@ cd aks-terraform-project
 
 ## Define Infrastructure Resources in Terraform As Per Following :-
 
-<a href="main.tf"> • main.tf </a> <br>
-<a href="variables.tf"> • variables.tf </a> <br>
-<a href="terraform.tfvars"> • terraform.tfvars </a> <br>
-
 <br>
 
 <b> • AKS with multiple node pools for high availability and scalability. </b> <br>
 <b> • Azure Load Balancer with a standard SKU for production use. </b> <br>
 <b> • Managed Identities for secure access to Azure services. </b> <br>
 <b> • Private Cluster with restricted access and VNET integration for security. </b> <br>
+
+<br>
+
+<a href="aks-prod-cluster/infra/main.tf"> • main.tf </a> <br>
+<a href="aks-prod-cluster/infra/variables.tf"> • variables.tf </a> <br>
+<a href="aks-prod-cluster/infra/terraform.tfvars.tf"> • terraform.tfvars </a> <br>
 
 <br>
 
@@ -85,6 +87,10 @@ cd aks-terraform-project
 ` terraform init ` <br>
 
 ` terraform apply ` <br>
+
+<br>
+
+### Some Best Practices :-
 
 <br>
 
