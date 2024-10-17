@@ -80,7 +80,7 @@ cd aks-terraform-project
 
 <br>
 
-### Initialize and Apply :-
+## Initialize and Apply :-
 
 <br>
 
@@ -90,7 +90,59 @@ cd aks-terraform-project
 
 <br>
 
-### Some Best Practices :-
+## Best Practices (Production Considerations) :-
+
+<br>
+
+<h4 align="center"> 1) Private Cluster :- </h4>
+
+<br>
+
+<b> A private cluster ensures that your Kubernetes API server is only accessible via private IPs, enhancing the security of your cluster by restricting public internet access. It means only specific IPs, such as those from a VPN or internal network, can access the cluster. <b> <br>
+
+<br>
+
+<a href="aks-prod-cluster/Best Practices/private-cluster.tf"> • Source Code </a> <br>
+
+<br>
+
+<h4 align="center"> 2) Multiple Node Pools :- </h4>
+
+<br>
+
+<b> Multiple node pools allow you to separate workloads across different nodes, enabling better management and scaling of different types of workloads (e.g., system workloads, user workloads, spot instances for cost savings). </b>
+
+<br>
+
+<a href="aks-prod-cluster/Best Practices/multiple-node-pools.tf"> • Source Code </a> <br>
+
+<br>
+
+<h4 align="center"> 3) Managed Identity :- </h4>
+
+<br>
+
+<b> Managed identities for Azure resources provide Azure services with an automatically managed identity in Azure AD, which you can use to authenticate to any service that supports Azure AD authentication without having to manage credentials. </b>
+
+<br>
+
+<a href="aks-prod-cluster/Best Practices/managed-identity.tf"> • Source Code </a> <br>
+
+<br>
+
+<h4 align="center"> 4) Use Auto-Scaling :- </h4>
+
+<br>
+
+<b> Auto-scaling automatically adjusts the number of nodes in your node pools based on the demand, ensuring your applications can handle load spikes and save costs when the demand is low. </b>
+
+<br>
+
+<a href="aks-prod-cluster/Best Practices/use-auto-scaling.tf"> • Source Code </a> <br>
+
+<br>
+
+<h2 align="center"> 3) Implement Production-Grade Observability : </h2>
 
 <br>
 
