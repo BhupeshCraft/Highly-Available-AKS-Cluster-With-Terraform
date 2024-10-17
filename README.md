@@ -146,6 +146,69 @@ cd aks-terraform-project
 
 <br>
 
+## Install Prometheus and Grafana using Helm :-
+
+<br>
+
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+```
+
+<br>
+
+## Deploy Prometheus and Grafana for monitoring and visualization :-
+
+<br>
+
+` helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace `
+
+<br>
+
+## Set up Grafana for advanced dashboards :-
+
+<br>
+
+` helm install grafana grafana/grafana --namespace monitoring `
+
+<br>
+
+## Logging with Grafana Loki :-
+
+<br>
+
+helm install loki grafana/loki-stack --namespace logging --create-namespace
+
+<br>
+
+` helm install loki grafana/loki-stack --namespace logging --create-namespace `
+
+<br>
+
+## Pixie for Advanced Observability (Use Pixie to gain granular insights into your application with minimal overhead. Pixie can automatically trace and visualize all interactions) :-
+
+<br>
+
+` px deploy `
+
+<br>
+
+## OpenTelemetry (OTEL) (For tracing, use OTEL to capture and analyze application traces) :-
+
+<br>
+
+` helm install otel-collector open-telemetry/opentelemetry-collector --namespace observability --create-namespace `
+
+<br>
+
+<b> Note : Configure OTEL to export traces and metrics to Grafana for visualization. <b>
+
+<br>
+
+
+
+
 
 
 
