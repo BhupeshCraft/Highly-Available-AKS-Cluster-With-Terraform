@@ -206,6 +206,21 @@ helm install loki grafana/loki-stack --namespace logging --create-namespace
 
 <br>
 
+<h2 align="center"> 4) Set Up Advanced Security Policies with Kyverno : </h2>
+
+<br>
+
+## Install Kyverno :-
+
+<br>
+
+` helm install kyverno kyverno/kyverno --namespace kyverno --create-namespace `
+
+<br>
+
+
+
+
 
 
 
