@@ -285,7 +285,34 @@ helm install loki grafana/loki-stack --namespace logging --create-namespace
 
 <br>
 
+<h2 align="center"> 5) Best Practices and Scaling : </h2>
 
+<br>
 
+<h4 align="center"> i) High Availability and Scalability :- </h4>
 
+<br>
 
+<b> Horizontal Pod Autoscaling (HPA): Use HPA to dynamically adjust the number of pod replicas in response to traffic. </b>
+
+<br>
+
+<b> Cluster Autoscaler: Automatically add/remove nodes from the AKS cluster based on workload demand.
+
+<br>
+
+<a href="aks-prod-cluster/Best Practices and Scaling/enable-autoscaling.tf"> • Source Code </a> <br>
+
+<br>
+
+<h4 align="center"> ii) Network Policies :- </h4>
+
+<br>
+
+<b> Implement network policies to control the traffic between pods and ensure that only necessary communication is allowed. For example, you can restrict communication between namespaces or deny all traffic by default and allow only specific communications. </b>
+
+<br>
+
+<a href="aks-prod-cluster/Best Practices and Scaling/network-policies.yaml"> • Source Code </a> <br>
+
+<br>
