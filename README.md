@@ -218,10 +218,72 @@ helm install loki grafana/loki-stack --namespace logging --create-namespace
 
 <br>
 
+## Best Practices With Kyverno Policies (Production Considerations) :-
 
+<br>
 
+<h4 align="center"> 1) Disallow Privileged Containers :- </h4>
 
+<br>
 
+<a href="aks-prod-cluster/kyverno-policies/disallow-privileged-containers.yaml"> • Source Code </a> <br>
+
+<br>
+
+<b> Prevent pods from running with privileged access, a common security best practice. </b>
+
+<br>
+
+<h4 align="center"> 2) Enforce Resource Limits :- </h4>
+
+<br>
+
+<b> Ensure all containers have defined CPU and memory limits to avoid resource contention and cluster instability. </b>
+
+<br>
+
+<a href="aks-prod-cluster/kyverno-policies/require-resource-limits.yaml"> • Source Code </a> <br>
+
+<br>
+
+<h4 align="center"> 3) Mandatory Image Registries :- </h4>
+
+<br>
+
+<b> Restrict containers to use only approved image registries (e.g., from Azure Container Registry or Docker Hub) </b>
+
+<br>
+
+<a href="aks-prod-cluster/kyverno-policies/allow-image-registries.yaml"> • Source Code </a> <br>
+
+<br>
+
+<h4 align="center"> 4) Enforce Read-Only Root Filesystem :- </h4>
+
+<br>
+
+<b> Ensure all containers are set to use a read-only root filesystem, limiting the possibility of compromising the underlying host. </b>
+
+<br>
+
+<a href="aks-prod-cluster/kyverno-policies/require-read-only-root-filesystem.yaml"> • Source Code </a> <br>
+
+<br>
+
+## Apply the Policies :-
+
+<br>
+
+` kubectl apply -f disallow-privileged.yaml ` <br>
+` kubectl apply -f require-resource-limits.yaml ` <br>
+` kubectl apply -f allowed-image-registries.yaml ` <br>
+` kubectl apply -f require-read-only-root-filesystem.yaml ` <br>
+
+<br>
+
+<b> NOTE : These policies are designed to maintain a high level of security, enforce compliance, and reduce vulnerabilities in production environments. </b>
+
+<br>
 
 
 
