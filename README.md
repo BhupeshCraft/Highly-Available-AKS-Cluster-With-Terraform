@@ -316,3 +316,169 @@ helm install loki grafana/loki-stack --namespace logging --create-namespace
 <a href="aks-prod-cluster/Best Practices and Scaling/network-policies.yaml"> • Source Code </a> <br>
 
 <br>
+
+<h2 align="center"> 6) Backup and Disaster Recovery : </h2>
+
+<br>
+
+<b> To enable Azure Backup for your AKS cluster and its resources (such as persistent volumes), you can use Azure Backup for AKS to protect critical data and configurations. Azure Backup provides automated and manual backup for Azure resources, including Azure Disk snapshots and AKS cluster state backups. </b>
+
+<br>
+
+## Enable Azure Kubernetes Service (AKS) Backup using Azure CLI :-
+
+<br>
+
+<h4 align="center"> I) Install the Azure CLI Backup Extension :- </h4>
+
+<br>
+
+` az extension add --name dataprotect `
+
+<br>
+
+<h4 align="center"> II) Create a Recovery Services Vault (A Recovery Services Vault is necessary to store the backups. Create one in the same resource group and region as your AKS cluster) :- </h4>
+
+<br>
+
+` az backup vault create --resource-group <your-resource-group> --name <your-vault-name> --location <region> `
+
+<br>
+
+<h4 align="center"> III) Assign Backup Permissions to AKS Cluster (The AKS cluster must have the necessary permissions to create and manage backups. Assign a Managed Identity with Contributor role) :- </h4>
+
+<br>
+
+` az aks update --resource-group <your-resource-group> --name <your-aks-cluster> --assign-identity <identity-id> `
+
+<br>
+
+<b> NOTE : Or you can assign a Contributor role using an existing service principal if you're using Azure AD integration. </b>
+
+<br>
+
+<h4 align="center"> IV) Enable Backup for AKS Cluster :- </h4>
+
+<br>
+
+` az backup protection enable-for-vm --vault-name <your-vault-name> --resource-group <your-resource-group> --vm <your-aks-cluster> `
+
+<br>
+
+<h4 align="center"> V) Set a Backup Policy (Define a backup policy to control the frequency and retention of backups) :- </h4>
+
+<br>
+
+` az backup policy create --vault-name <your-vault-name> --name <policy-name> --policy <policy-parameters.json> `
+
+<br>
+
+<b> Here’s an example of a basic policy JSON :- </b>
+
+<br>
+
+```
+{
+    "name": "aks-backup-policy",
+    "properties": {
+        "schedulePolicy": {
+            "scheduleRunFrequency": "Daily",
+            "scheduleRunTimes": ["2024-10-17T02:00:00Z"]
+        },
+        "retentionPolicy": {
+            "retentionDuration": {
+                "count": 30,
+                "durationType": "Days"
+            }
+        }
+    }
+}
+```
+
+<br>
+
+<b> NOTE : You can adjust this policy based on your requirements (e.g., daily backups and 30-day retention) </b>
+
+<br>
+
+<h4 align="center"> VI) Enable Backup for Persistent Volumes (To enable backups for persistent volumes (PV) in your AKS cluster, you’ll first need to ensure that the volumes are using Azure Managed Disks) </h4>
+
+<br>
+
+` az backup protection enable-for-disk --vault-name <your-vault-name> --resource-group <your-resource-group> --disk <disk-name> `
+
+<br>
+
+<b> NOTE : This command allows you to enable protection for any managed disk used in the cluster, including those attached to your persistent volumes. </b>
+
+<br>
+
+## Enable Automatic Backup for Persistent Volumes using Velero :-
+
+<br>
+
+<b> For a more Kubernetes-native approach, you can use Velero (an open-source backup and recovery tool) along with Azure Blob storage for persistent volume backup. </b>
+
+<br>
+
+<h4 align="center"> I) Install Velero :- </h4>
+
+<br>
+
+```
+velero install \
+    --provider azure \
+    --plugins velero/velero-plugin-for-microsoft-azure:v1.4.0 \
+    --bucket <your-blob-container> \
+    --secret-file ./credentials-velero \
+    --backup-location-config resourceGroup=<your-blob-resource-group>,storageAccount=<your-storage-account>,subscriptionId=<your-subscription-id>
+```
+
+<br>
+
+<b> NOTE : Replace the placeholder values with your Azure Blob storage and resource group. </b>
+
+<br>
+
+<h2 align="center"> II) Create a Backup Schedule :- </h2>
+
+<br>
+
+` velero schedule create daily-backup --schedule "0 2 * * *" `
+
+<br>
+
+<b> This example creates a daily backup at 2 AM for your persistent volumes. </b>
+
+<br>
+
+## Monitor and Manage Backups :-
+
+<br>
+
+<b> NOTE : You can monitor your backup jobs using the Azure Portal or Azure CLI </b>
+
+<br>
+
+` az backup job list --vault-name <your-vault-name> --resource-group <your-resource-group> `
+
+<br>
+
+<b> NOTE : To restore a backup (whether it's the cluster state or persistent volumes). </b>
+
+<br>
+
+` az backup restore restore-disks --vault-name <your-vault-name> --resource-group <your-resource-group> --restore-request <restore-request> `
+
+<br>
+
+<h2 align="center"> THANK YOU 🙏🏻 </h2>
+
+<br>
+
+
+
+
+
+
+
